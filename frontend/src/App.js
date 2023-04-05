@@ -9,7 +9,9 @@ import Home from './views/HomePage';
 import Login from './views/LoginPage';
 import Register from './views/RegisterPage';
 import ProtectedPage from './views/ProtectedPage';
-
+import DashBoard from './components/Dashboard';
+import PostList from './components/PostList'
+import PostForm from './components/PostForm';
 function App() {
   return (
     <Router>
@@ -17,7 +19,7 @@ function App() {
         <AuthProvider>
           <Navbar />
           <Switch>
-            <PrivateRoute component={ProtectedPage} path='/protected' exact />
+            <PrivateRoute component={PostForm} path='/PostForm' exact />
             <Route component={Login} path='/login' />
             <Route component={Register} path='/register' />
             <Route component={Home} path='/' />

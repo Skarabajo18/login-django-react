@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Dashboard.css';
-
+import './sb-admin-2.css'
 
 
 function Dashboard() {
