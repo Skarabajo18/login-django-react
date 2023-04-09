@@ -62,39 +62,6 @@ export const AuthProvider = ({ children }) => {
       alert('Something went wrong!');
     }
   };
-  
-
-  const PostForm = async (title, content) => {
-      const response = await fetch('http://127.0.0.1:8000/api/createpost/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(
-          title,
-          content
-        )
-      });
-      const data = await response.json();
-
-      if (response.status === 200) {
-        setAuthTokens(data);
-        setUser(jwt_decode(data.access));
-        localStorage.setItem('authTokens', JSON.stringify(data));
-        history.push('/PostForm');
-      } else {
-        alert('Something went wrong!');
-      }
-    };
-  
-  // Llamada a la función
-  const postData = {
-    title: 'Título del post',
-    content: 'Contenido del post'
-  };
-  PostForm(postData);
-
-
 
   const logoutUser = () => {
     setAuthTokens(null);
@@ -110,9 +77,7 @@ export const AuthProvider = ({ children }) => {
     setAuthTokens,
     registerUser,
     loginUser,
-    logoutUser,
-    PostForm,
-    // PostList
+    logoutUser
   };
 
   useEffect(() => {

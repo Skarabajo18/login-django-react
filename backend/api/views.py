@@ -1,9 +1,3 @@
-from rest_framework import generics
-from .serializer import PostSerializer
-from django.http import JsonResponse
-from .forms import PostForm
-
-from django.shortcuts import render, redirect
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -12,10 +6,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, status
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.shortcuts import get_object_or_404
-
-from rest_framework import status
-from .models import Post
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -41,41 +31,15 @@ def testEndPoint(request):
     return Response({}, status.HTTP_400_BAD_REQUEST)
 
 
+def post(request):
+    return render(request, 'index.html')
+
+
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
         '/api/token/',
         '/api/register/',
-        '/api/token/refresh/',
-        '/api/PostList',
-        '/api/PostDetail',
+        '/api/token/refresh/'
     ]
     return Response(routes)
-
-
-# # views.py
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def create_post(request):
-#     form = PostForm(request.data)
-#     if form.is_valid():
-#         post = form.save(commit=False)
-#         post.author = request.user
-#         post.save()
-#         return Response({'message': 'Post created successfully!'}, status=status.HTTP_201_CREATED)
-#     else:
-#         return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# # views.py
-
-# @api_view(['GET'])
-# def get_posts(request):
-#     posts = Post.objects.all()
-#     serializer = PostSerializer(posts, many=True)
-#     return Response(serializer.data)
-
-
-# class PostList(generics.ListAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer

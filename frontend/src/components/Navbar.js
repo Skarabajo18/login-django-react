@@ -19,7 +19,7 @@ const CollapsibleExample = () => {
             {user ? (
               <>
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/PostForm">PostForm</Nav.Link>
+                <Nav.Link href="/protected">Protected Page</Nav.Link>
                 <Nav.Link onClick={logoutUser}>Logout</Nav.Link>
               </>
             ) : (
