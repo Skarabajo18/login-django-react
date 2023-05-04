@@ -18,28 +18,26 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
-@api_view(['GET', 'POST'])
+@api_view(["GET", "POST"])
 @permission_classes([IsAuthenticated])
 def testEndPoint(request):
-    if request.method == 'GET':
-        data = f'Congratulation {request.user}, your API just responded to GET request'
-        return Response({'response': data}, status=status.HTTP_200_OK)
-    elif request.method == 'POST':
-        text = request.POST.get('text')
-        data = f'Congratulation your API just responded to POST request with text: {text}'
-        return Response({'response': data}, status=status.HTTP_200_OK)
+    if request.method == "GET":
+        data = f"Bienvenido {request.user}, al home privado"
+        return Response({"response": data}, status=status.HTTP_200_OK)
+    elif request.method == "POST":
+        text = request.POST.get("text")
+        data = (
+            f"Congratulation your API just responded to POST request with text: {text}"
+        )
+        return Response({"response": data}, status=status.HTTP_200_OK)
     return Response({}, status.HTTP_400_BAD_REQUEST)
 
 
 def post(request):
-    return render(request, 'index.html')
+    return render(request, "index.html")
 
 
-@api_view(['GET'])
+@api_view(["GET"])
 def getRoutes(request):
-    routes = [
-        '/api/token/',
-        '/api/register/',
-        '/api/token/refresh/'
-    ]
+    routes = ["/api/token/", "/api/register/", "/api/token/refresh/"]
     return Response(routes)

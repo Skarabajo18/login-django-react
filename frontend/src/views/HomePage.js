@@ -5,13 +5,11 @@ import FeatureCard from "../components/FeatureCard";
 import Card from "../components/Card";
 import Header from "../components/Header";
 import SideWidgets from "../components/SideWidgets";
-import Navbar from "../components/Navbar";
+
 const Home = () => {
   const { user } = useContext(AuthContext);
   return (
     <section>
-      <Navbar />
-
       <div class="container">
         <div class="row">
           {user && <UserInfo user={user} />}
@@ -22,6 +20,7 @@ const Home = () => {
               </div>
             </div>
           </div>
+
           <FeatureCard />
           <Card imageSrc="https://dummyimage.com/700x350/dee2e6/000000.jpg" />
           <Card imageSrc="https://dummyimage.com/700x350/dee2e6/000000.jpg" />

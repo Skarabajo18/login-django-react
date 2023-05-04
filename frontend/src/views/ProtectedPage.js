@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useAxios from "../utils/UseAxios";
-import Navbar from "../components/Navbar";
 
 function ProtectedPage() {
   const [res, setRes] = useState("");
@@ -21,7 +20,6 @@ function ProtectedPage() {
 
   return (
     <div>
-      <Navbar />
       <h1>Projected Page</h1>
       <p>{res}</p>
     </div>
