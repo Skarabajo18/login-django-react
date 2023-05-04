@@ -2,26 +2,72 @@ import { useEffect, useState } from "react";
 import useAxios from "../utils/UseAxios";
 
 function ProtectedPage() {
-  const [res, setRes] = useState("");
-  const api = useAxios();
+  const axiosInstance = useAxios();
+  const [formData, setFormData] = useState({ title: "", body: "" });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [postResponse, setPostResponse] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get("/test/");
-        setRes(response.data.response);
-      } catch {
-        setRes("Something went wrong");
-      }
-    };
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const formDataWithFile = new FormData();
+    formDataWithFile.append("title", formData.title);
+    formDataWithFile.append("body", formData.body);
+    formDataWithFile.append("image", selectedFile);
+
+    axiosInstance
+      .post("/posts/", formDataWithFile)
+      .then((response) => {
+        setPostResponse(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
-      <h1>Projected Page</h1>
-      <p>{res}</p>
+      <h1>Protected Page</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Título:
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Contenido:
+          <textarea
+            name="body"
+            value={formData.body}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Imagen:
+          <input type="file" onChange={handleFileChange} />
+        </label>
+        <button type="submit">Crear Post</button>
+      </form>
+      {postResponse && (
+        <div>
+          <p>Título: {postResponse.title}</p>
+          <p>Contenido: {postResponse.body}</p>
+          <p>Imagen: {postResponse.image}</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,11 +1,22 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from api.serializer import MyTokenObtainPairSerializer, RegisterSerializer
+from api.serializer import MyTokenObtainPairSerializer, RegisterSerializer,PostSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics, status
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework import generics
+from .models import Post
+
+
+class PostList(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -39,5 +50,5 @@ def post(request):
 
 @api_view(["GET"])
 def getRoutes(request):
-    routes = ["/api/token/", "/api/register/", "/api/token/refresh/"]
+    routes = ["/api/token/", "/api/register/", "/api/token/refresh/", "/api/posts/"]
     return Response(routes)
