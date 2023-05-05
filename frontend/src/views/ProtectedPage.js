@@ -6,6 +6,18 @@ function ProtectedPage() {
   const [formData, setFormData] = useState({ title: "", body: "" });
   const [selectedFile, setSelectedFile] = useState(null);
   const [postResponse, setPostResponse] = useState(null);
+  const [allPosts, setAllPosts] = useState([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get("/posts/")
+      .then((response) => {
+        setAllPosts(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [axiosInstance]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -68,6 +80,14 @@ function ProtectedPage() {
           <p>Imagen: {postResponse.image}</p>
         </div>
       )}
+      <h2>Todos los Posts:</h2>
+      {allPosts.map((post) => (
+        <div key={post.id}>
+          <h3>{post.title}</h3>
+          <p>{post.body}</p>
+          <img src={post.image} alt={post.title} />
+        </div>
+      ))}
     </div>
   );
 }
